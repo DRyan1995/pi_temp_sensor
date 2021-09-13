@@ -2,6 +2,7 @@
 
 import sys
 import Adafruit_DHT
+import time
 
 sensor = Adafruit_DHT.DHT11
 pin = 17
@@ -17,3 +18,4 @@ while True:
             #TODO: do something
             print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
             break
+    time.sleep(5)
