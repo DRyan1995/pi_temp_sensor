@@ -11,7 +11,7 @@ sensor = Adafruit_DHT.DHT11
 pin = 17
 max_retry = 10
 room = "living room"
-SAMPLE_INTERVAL_SECONDS = 60 * 30
+SAMPLE_INTERVAL_SECONDS = 60 * 5
 
 def get_sensor_data():
     i = 0
@@ -48,6 +48,6 @@ while True:
         msg = getTime() + "\n" + room
         msg += ": T: {}C, H: {}%".format(temperature, humidity)
         telegram_bot_sendtext(msg)
-    time.sleep(60*SAMPLE_INTERVAL_SECONDS)
+    time.sleep(SAMPLE_INTERVAL_SECONDS)
 
 
