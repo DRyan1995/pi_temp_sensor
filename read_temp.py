@@ -3,7 +3,6 @@
 import sys
 import Adafruit_DHT
 import time
-import subprocess
 import requests
 from datetime import datetime
 import pytz
@@ -11,6 +10,7 @@ import pytz
 sensor = Adafruit_DHT.DHT11
 pin = 17
 max_retry = 10
+room = "living room"
 SAMPLE_INTERVAL_SECONDS = 60 * 30
 
 def get_sensor_data():
@@ -20,8 +20,9 @@ def get_sensor_data():
         i += 1
         humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
         if humidity is not None and temperature is not None:
-            print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
-            return humidity, temperatures
+            print(getTime())
+            print(room + ': Temp={0:0.1f}*  Humidity={1:0.1f}% \n\n'.format(temperature, humidity))
+            return humidity, temperature
     return None, None
 
 def telegram_bot_sendtext(msg="test"):
@@ -44,8 +45,8 @@ def getTime():
 while True:
     humidity, temperature = get_sensor_data()
     if humidity is not None and temperature is not None:
-        msg = getTime() + "\n"
-        msg += "T: {}C, H: {}%".format(temperature, humidity)
+        msg = getTime() + "\n" + room
+        msg += ": T: {}C, H: {}%".format(temperature, humidity)
         telegram_bot_sendtext(msg)
     time.sleep(60*SAMPLE_INTERVAL_SECONDS)
 
